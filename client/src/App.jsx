@@ -6,6 +6,7 @@ const templates = [
   {
     id: 1,
     name: "Simple",
+    image: "./images/simple.png",
     bgClass: "bg-gray-100",
     layout: "simple",
     buttonClass: "bg-blue-500 text-white rounded",
@@ -14,6 +15,7 @@ const templates = [
   {
     id: 2,
     name: "Bold",
+    image: "./images/bold.png",
     bgClass: "bg-gradient-to-r from-purple-500 to-pink-500",
     layout: "bold",
     buttonClass: "bg-yellow-400 text-black font-bold rounded-full",
@@ -22,6 +24,7 @@ const templates = [
   {
     id: 3,
     name: "Modern",
+    image: './images/modern.png',
     bgClass: "bg-gray-900",
     layout: "modern",
     buttonClass: "bg-green-500 text-white rounded-lg hover:bg-green-600 transition",
@@ -35,7 +38,8 @@ function App() {
   const [intro, setIntro] = useState('');
   const [links, setLinks] = useState([{ text: '', url: '' }]);
   const [color, setColor] = useState('#ffffff');
-  const [tColor, setTColor] = useState('#ffffff');
+  const [ptColor, setPTColor] = useState('#ffffff');
+  const [btColor, setBTColor] = useState('#ffffff');
   const [bColor, setBColor] = useState('#000000');
   const [logo, setLogo] = useState(null);
   const [pageName, setPageName] = useState('');
@@ -55,6 +59,9 @@ function App() {
     formData.append('intro', intro);
     formData.append('links', JSON.stringify(links));
     formData.append('color', color);
+    formData.append('ptColor', ptColor);
+    formData.append('btColor', btColor);
+    formData.append('bColor', bColor);
     formData.append('template', template.name);
     if (logo) formData.append('logo', logo);
 
@@ -182,6 +189,15 @@ function App() {
             className="p-1 h-10 w-20 border rounded"
           />
         </div>
+        <div className="ml-4 mr-8">
+          <label className="block mb-2">Primary Text Color:</label>
+          <input
+            type="color"
+            value={ptColor}
+            onChange={(e) => setPTColor(e.target.value)}
+            className="p-1 h-10 w-20 border rounded"
+          />
+        </div>
         <div className="ml-8 mr-4">
           <label className="block mb-2">Button Color:</label>
           <input
@@ -192,11 +208,11 @@ function App() {
           />
         </div>
         <div className="ml-8 mr-4">
-          <label className="block mb-2">Text Color:</label>
+          <label className="block mb-2">Button Text Color:</label>
           <input
             type="color"
-            value={tColor}
-            onChange={(e) => setTColor(e.target.value)}
+            value={btColor}
+            onChange={(e) => setBTColor(e.target.value)}
             className="p-1 h-10 w-20 border rounded"
           />
         </div>
