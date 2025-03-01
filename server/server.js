@@ -103,9 +103,44 @@ app.post('/api/save-landing', upload.single('logo'), (req, res) => {
             ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
             <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
             <p class="mb-4">${intro}</p>
-            <div class="space-y-2">
+            <div class="space-y-5">
               ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
             </div>
+            <footer class="py-6 text-${ptColor}">
+              <div class="container mx-auto text-center mt-6">
+                <!-- Navigation Links -->
+                <nav class="flex justify-center space-x-6 mb-4">
+                  <h2>Contact Us</h2>
+                </nav>
+            
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-4 mb-4">
+                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://wa.me//+94704874781" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="https://github.com/SNuwan00" target="_blank">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </a>
+                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
+                  <i class="fas fa-envelope email-icon"></i>
+                </a>
+                  <a href="https://csbodima.lk/nuwan" target="_blank">
+                    <i class="fas fa-globe"></i>
+                  </a>
+                  <!-- Other social media links -->
+                </div>
+            
+                <!-- Copyright Notice -->
+                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
+              </div>
+            </footer>
           </div>
         </body>
         </html>
@@ -148,9 +183,44 @@ app.post('/api/save-landing', upload.single('logo'), (req, res) => {
             ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
             <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
             <p class="mb-4">${intro}</p>
-            <div class="space-y-2">
+            <div class="space-y-5">
               ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
             </div>
+            <footer class="py-6 text-${ptColor}">
+              <div class="container mx-auto text-center mt-6">
+                <!-- Navigation Links -->
+                <nav class="flex justify-center space-x-6 mb-4">
+                  <h2>Contact Us</h2>
+                </nav>
+            
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-4 mb-4">
+                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://wa.me//+94704874781" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="https://github.com/SNuwan00" target="_blank">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </a>
+                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
+                  <i class="fas fa-envelope email-icon"></i>
+                </a>
+                  <a href="https://csbodima.lk/nuwan" target="_blank">
+                    <i class="fas fa-globe"></i>
+                  </a>
+                  <!-- Other social media links -->
+                </div>
+            
+                <!-- Copyright Notice -->
+                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
+              </div>
+            </footer>
           </div>
         </body>
         </html>
@@ -196,9 +266,44 @@ app.post('/api/save-landing', upload.single('logo'), (req, res) => {
             ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
             <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
             <p class="mb-4">${intro}</p>
-            <div class="space-y-2">
+            <div class="space-y-5">
               ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
             </div>
+            <footer class="py-6 text-${ptColor}">
+              <div class="container mx-auto text-center mt-6">
+                <!-- Navigation Links -->
+                <nav class="flex justify-center space-x-6 mb-4">
+                  <h2>Contact Us</h2>
+                </nav>
+            
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-4 mb-4">
+                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://wa.me//+94704874781" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="https://github.com/SNuwan00" target="_blank">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </a>
+                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
+                  <i class="fas fa-envelope email-icon"></i>
+                </a>
+                  <a href="https://csbodima.lk/nuwan" target="_blank">
+                    <i class="fas fa-globe"></i>
+                  </a>
+                  <!-- Other social media links -->
+                </div>
+            
+                <!-- Copyright Notice -->
+                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
+              </div>
+            </footer>
           </div>
         </body>
         </html>
