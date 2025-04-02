@@ -99,3 +99,13 @@ body {
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
+
+
+/* For QR code styling */
+.qr-rounded svg path:not([stroke]) {
+  border-radius: 4px !important;
+}
+
+.qr-dots svg path:not([stroke]) {
+  border-radius: 50% !important;
+}
