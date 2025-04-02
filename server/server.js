@@ -40,6 +40,7 @@ const upload = multer({ storage });
 app.post('/api/save-landing', upload.single('logo'), (req, res) => {
   // Log the incoming request body for debugging
   console.log('Request body:', req.body);
+  console.log('Template received:', req.body.template); // Add this line to specifically log the template
 
   const { name, businessName, intro, links, color, ptColor, btColor, bColor, template } = req.body;
   const logoPath = req.file ? `/logoImage/${req.file.filename}` : '';
@@ -65,253 +66,118 @@ app.post('/api/save-landing', upload.single('logo'), (req, res) => {
   }
 
   // Define template-specific styles
-  let containerClass, buttonClass, htmlContent;
+  let containerClass, htmlContent;
   switch (template) {
-    case "Simple":
+    case "Light": // Must match exactly what's sent from client
       containerClass = "text-center p-6 bg-white rounded-lg shadow-lg";
-      htmlContent = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>${businessName}</title>
-          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-          <style>
-			      #container{
-			      	background:${color};
-              color:${ptColor};
-			      	height: 90vh;  
-			      	width: 50vw; 
-			      	display: flex;
-			      	flex-direction: column;
-			      	justify-content: center;
-			      	align-items: center;
-			      }
-			      #link {
-			      	background:${bColor};
-              color:${btColor};
-			      	width: 40vw; 
-			      	transition: transform 0.3s ease;
-			      }
-			      #link:hover {
-			      	transform: scale(1.05);
-			      }
-			    </style>
-        </head>
-        <body class="flex justify-center items-center min-h-screen">
-          <div class="${containerClass}"   id="container">
-            ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
-            <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
-            <p class="mb-4">${intro}</p>
-            <div class="space-y-5">
-              ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
-            </div>
-            <footer class="py-6 text-${ptColor}">
-              <div class="container mx-auto text-center mt-6">
-                <!-- Navigation Links -->
-                <nav class="flex justify-center space-x-6 mb-4">
-                  <h2>Contact Us</h2>
-                </nav>
-            
-                <!-- Social Media Icons -->
-                <div class="flex justify-center space-x-4 mb-4">
-                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="http://wa.me//+94704874781" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                  </a>
-                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                  <a href="https://github.com/SNuwan00" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </a>
-                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
-                  <i class="fas fa-envelope email-icon"></i>
-                </a>
-                  <a href="https://csbodima.lk/nuwan" target="_blank">
-                    <i class="fas fa-globe"></i>
-                  </a>
-                  <!-- Other social media links -->
-                </div>
-            
-                <!-- Copyright Notice -->
-                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
-      `;
       break;
 
-    case "Bold":
+    case "Dark": // Must match exactly what's sent from client
       containerClass = "text-center p-8 bg-gray-900 text-white rounded-xl shadow-2xl";
-      htmlContent = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>${businessName}</title>
-          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-          <style>
-			      #container{
-			      	background:${color};
-              color:${ptColor};
-			      	height: 90vh;  
-			      	width: 50vw; 
-			      	display: flex;
-			      	flex-direction: column;
-			      	justify-content: center;
-			      	align-items: center;
-			      }
-			      #link {
-			      	background:${bColor};
-              color:${btColor};
-			      	width: 40vw; 
-			      	transition: transform 0.3s ease;
-			      }
-			      #link:hover {
-			      	transform: scale(1.05);
-			      }
-			    </style>
-        </head>
-        <body class="flex justify-center items-center min-h-screen">
-          <div class="${containerClass}"   id="container">
-            ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
-            <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
-            <p class="mb-4">${intro}</p>
-            <div class="space-y-5">
-              ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
-            </div>
-            <footer class="py-6 text-${ptColor}">
-              <div class="container mx-auto text-center mt-6">
-                <!-- Navigation Links -->
-                <nav class="flex justify-center space-x-6 mb-4">
-                  <h2>Contact Us</h2>
-                </nav>
-            
-                <!-- Social Media Icons -->
-                <div class="flex justify-center space-x-4 mb-4">
-                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="http://wa.me//+94704874781" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                  </a>
-                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                  <a href="https://github.com/SNuwan00" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </a>
-                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
-                  <i class="fas fa-envelope email-icon"></i>
-                </a>
-                  <a href="https://csbodima.lk/nuwan" target="_blank">
-                    <i class="fas fa-globe"></i>
-                  </a>
-                  <!-- Other social media links -->
-                </div>
-            
-                <!-- Copyright Notice -->
-                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
-      `;
       break;
 
-    case "Modern":
-      containerClass = "text-center p-6 rounded-lg shadow-lg border border-green-500";
-      htmlContent = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>${businessName}</title>
-          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-          <style>
-			      body {
-			      	background: linear-gradient(to right, #FF4066, #FFF16A);
-			      }
-			      #container{
-			      	background:${color};
-              color:${ptColor};
-			      	height: 90vh;  
-			      	width: 50vw; 
-			      	display: flex;
-			      	flex-direction: column;
-			      	justify-content: center;
-			      	align-items: center;
-			      }
-			      #link {
-			      	background:${bColor};
-              color:${btColor};
-			      	width: 40vw; 
-			      	transition: transform 0.3s ease;
-			      }
-			      #link:hover {
-			      	transform: scale(1.05);
-			      }
-			    </style>
-        </head>
-        <body class="flex justify-center items-center min-h-screen">
-          <div class="${containerClass}"   id="container">
-            ${logoPath ? `<img src="${logoPath}" alt="Logo" class="mx-auto h-24 mb-4 w-32 h-32 rounded-full object-cover">` : ''}
-            <h1 class="text-3xl font-bold mb-2">${businessName}</h1>
-            <p class="mb-4">${intro}</p>
-            <div class="space-y-5">
-              ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" class="block px-4 py-2 rounded-lg shadow-lg" id="link">${link.text}</a>`).join('')}
-            </div>
-            <footer class="py-6 text-${ptColor}">
-              <div class="container mx-auto text-center mt-6">
-                <!-- Navigation Links -->
-                <nav class="flex justify-center space-x-6 mb-4">
-                  <h2>Contact Us</h2>
-                </nav>
-            
-                <!-- Social Media Icons -->
-                <div class="flex justify-center space-x-4 mb-4">
-                  <a href="https://www.facebook.com/sanju.srinuwan?mibextid=wwXIfr" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="http://wa.me//+94704874781" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                  </a>
-                  <a href="https://linkedin.com/in/sanjuka-sri-nuwan-7031a229a" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                  <a href="https://github.com/SNuwan00" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </a>
-                <a href="mailto:sanjukasrinuwan@gmail.com" target="_blank">
-                  <i class="fas fa-envelope email-icon"></i>
-                </a>
-                  <a href="https://csbodima.lk/nuwan" target="_blank">
-                    <i class="fas fa-globe"></i>
-                  </a>
-                  <!-- Other social media links -->
-                </div>
-            
-                <!-- Copyright Notice -->
-                <p class="text-sm">© 2024 CSB Development, Inc. All rights reserved.</p>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
-      `;
-      break;
     default:
-      return res.status(400).json({ error: "Invalid template" });
+      console.error(`Invalid template: "${template}" (type: ${typeof template})`);
+      return res.status(400).json({ 
+        error: `Invalid template: "${template}"`, 
+        availableTemplates: ["Light", "Dark"],
+        receivedType: typeof template
+      });
   }
+
+  // Update the button styles in the HTML template
+  htmlContent = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>${businessName}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+      body {
+        ${template === "Dark" ? 'background: linear-gradient(to right, #1a202c, #2d3748);' : ''}
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+      }
+      #container {
+        background: ${color};
+        color: ${ptColor};
+        width: 100%;
+        max-width: 400px;
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+      #link {
+        background: ${bColor};
+        color: ${btColor};
+        width: 100%;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 0.75rem;
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.12), 
+                    0 2px 4px rgba(0,0,0,0.08), 
+                    inset 0 -2px 0 rgba(0,0,0,0.2);
+        transform: translateY(0);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+      #link:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, 
+                  rgba(255,255,255,0.1) 0%, 
+                  rgba(255,255,255,0.05) 40%, 
+                  rgba(0,0,0,0) 100%);
+      }
+      #link:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 7px 14px rgba(0,0,0,0.15), 
+                    0 5px 5px rgba(0,0,0,0.1), 
+                    inset 0 -2px 0 rgba(0,0,0,0.2);
+      }
+      #link:active {
+        transform: translateY(1px);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12), 
+                    0 1px 3px rgba(0,0,0,0.08),
+                    inset 0 1px 1px rgba(0,0,0,0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="${containerClass}" id="container">
+      <div style="width: 100%;">
+        ${logoPath ? `<img src="${logoPath}" alt="Logo" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; margin: 0 auto 1rem auto; display: block;">` : ''}
+        <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 0.5rem; text-align: center;">${businessName}</h1>
+        <p style="margin-bottom: 1.5rem; text-align: center;">${intro}</p>
+        <div style="width: 100%;">
+          ${parsedLinks.map(link => `<a href="${link.url}" target="_blank" id="link">${link.text}</a>`).join('\n          ')}
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+  `;
 
   // Save to file
   fs.writeFileSync(`landings/${landingName}.html`, htmlContent);
