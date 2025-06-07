@@ -396,3 +396,177 @@ function QRTypeSelector({ url, onNext, onBack }) {
               </div>
             </div>
           </div>
+          {/* Enhanced Preview */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4">
+              <i className="fas fa-eye mr-2 text-blue-600 dark:text-blue-400"></i>
+              Live Preview
+            </h3>
+            <div className="flex justify-center">
+              <div className="relative">
+                <div 
+                  className={`p-6 rounded-xl shadow-lg relative transition-all duration-300 ${
+                    selectedType === 'rounded' ? 'qr-rounded' : ''
+                  } ${
+                    selectedType === 'dots' ? 'qr-dots' : ''
+                  } ${
+                    selectedType === 'colored' ? 'qr-colored' : ''
+                  } ${
+                    selectedType === 'micro' ? 'qr-micro' : ''
+                  } ${
+                    selectedType === 'logo' ? 'qr-logo' : ''
+                  }`}
+                  style={{ 
+                    background: useGradientBackground 
+                      ? `linear-gradient(135deg, ${bgGradientColor1}, ${bgGradientColor2})`
+                      : backgroundColor,
+                    width: 'fit-content',
+                    border: selectedType === 'rounded' ? '2px solid rgba(59, 130, 246, 0.2)' : '1px solid rgba(0, 0, 0, 0.1)',
+                    boxShadow: selectedType === 'dots' ? '0 8px 25px rgba(0, 0, 0, 0.15)' : 
+                              selectedType === 'logo' ? '0 12px 30px rgba(0, 0, 0, 0.2)' : 
+                              '0 4px 15px rgba(0, 0, 0, 0.1)'
+                  }}
+                >
+                  <QRCodeSVG 
+                    value={url || 'https://example.com'}
+                    size={selectedType === 'micro' ? 140 : 160}
+                    bgColor={useGradientBackground ? 'transparent' : backgroundColor}
+                    fgColor={useGradientDot ? 'url(#qrGradient)' : dotColor}
+                    level="H"
+                    includeMargin={includeMargin}
+                    imageSettings={selectedType === 'logo' && logoPreview ? {
+                      src: logoPreview,
+                      x: undefined,
+                      y: undefined,
+                      height: selectedType === 'micro' ? 28 : 35,
+                      width: selectedType === 'micro' ? 28 : 35,
+                      excavate: true,
+                    } : undefined}
+                  />
+                  
+                  {/* Gradient Definition for QR Code */}
+                  {useGradientDot && (
+                    <svg width="0" height="0">
+                      <defs>
+                        <linearGradient id="qrGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor={dotGradientColor1} />
+                          <stop offset="100%" stopColor={dotGradientColor2} />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  )}
+                </div>
+                
+                {/* Preview Badge */}
+                <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow-lg">
+                  {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center mt-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Live preview of your <span className="font-semibold text-blue-600 dark:text-blue-400">{selectedType}</span> QR code
+              </p>
+              <div className="flex justify-center items-center mt-2 space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center">
+                  <i className="fas fa-palette mr-1"></i>
+                  {useGradientDot ? 'Gradient Colors' : 'Solid Color'}
+                </span>
+                <span className="flex items-center">
+                  <i className="fas fa-square mr-1"></i>
+                  {useGradientBackground ? 'Gradient Background' : 'Solid Background'}
+                </span>
+                <span className="flex items-center">
+                  <i className="fas fa-expand-arrows-alt mr-1"></i>
+                  {includeMargin ? 'With Margin' : 'No Margin'}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Navigation Buttons */}
+          <div className="flex flex-col space-y-4 mt-8 sm:flex-row sm:justify-between sm:space-y-0">
+            <button
+              onClick={onBack}
+              className="px-4 py-2 border mb-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center mb-3 sm:mb-0"
+            >
+              <i className="fas fa-arrow-left mr-2"></i>
+              Back to Editor
+            </button>
+            
+            <button
+              onClick={handleNext}
+              className="px-4 py-2 mt-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all duration-300 flex items-center justify-center"
+            >
+              Next: Generate QR Code
+              <i className="fas fa-arrow-right ml-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Enhanced Custom Styles for QR Code Types */}
+      <style jsx global>{`
+        /* Improved Dots QR Code Styles */
+        .qr-dots svg rect {
+          rx: 50% !important;
+          ry: 50% !important;
+        }
+        
+        .qr-dots svg path {
+          border-radius: 50% !important;
+        }
+        
+        /* Enhanced Rounded QR Code Styles */
+        .qr-rounded svg {
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        
+        .qr-rounded svg rect {
+          rx: 3px !important;
+          ry: 3px !important;
+        }
+        
+        /* Improved Colored QR Code Styles */
+        .qr-colored svg {
+          filter: contrast(1.15) brightness(1.05) saturate(1.1);
+        }
+        
+        /* Enhanced Micro QR Code Styles */
+        .qr-micro svg {
+          filter: sharp(1px) contrast(1.1);
+        }
+        
+        /* Enhanced Logo QR Code Styles */
+        .qr-logo svg {
+          position: relative;
+          border-radius: 8px;
+        }
+        
+        /* Smooth transitions for all QR types */
+        .qr-container {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .qr-container:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        /* Enhanced gradient support */
+        .qr-gradient {
+          background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        }
+        
+        /* Toggle switch custom styling */
+        .peer:checked ~ .peer-checked\\:bg-blue-600 {
+          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export default QRTypeSelector;
