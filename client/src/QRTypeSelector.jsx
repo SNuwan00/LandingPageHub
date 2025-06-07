@@ -251,3 +251,148 @@ function QRTypeSelector({ url, onNext, onBack }) {
                 </div>
               )}
             </div>
+            {/* Background Color Section */}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Background Color
+                </label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">Gradient</span>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={useGradientBackground}
+                      onChange={(e) => setUseGradientBackground(e.target.checked)}
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+              </div>
+              
+              {!useGradientBackground ? (
+                <div className="flex items-center">
+                  <input 
+                    type="color" 
+                    value={backgroundColor}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    className="h-10 w-10 border rounded-lg mr-3 cursor-pointer"
+                  />
+                  <input 
+                    type="text" 
+                    value={backgroundColor}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    className="flex-1 p-2 border rounded-lg dark:bg-gray-600 dark:text-white dark:border-gray-500 focus:ring-2 focus:ring-blue-500"
+                    placeholder="#FFFFFF"
+                  />
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Color 1</label>
+                    <div className="flex items-center">
+                      <input 
+                        type="color" 
+                        value={bgGradientColor1}
+                        onChange={(e) => setBgGradientColor1(e.target.value)}
+                        className="h-8 w-8 border rounded mr-2 cursor-pointer"
+                      />
+                      <input 
+                        type="text" 
+                        value={bgGradientColor1}
+                        onChange={(e) => setBgGradientColor1(e.target.value)}
+                        className="flex-1 p-1 text-xs border rounded dark:bg-gray-600 dark:text-white dark:border-gray-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Color 2</label>
+                    <div className="flex items-center">
+                      <input 
+                        type="color" 
+                        value={bgGradientColor2}
+                        onChange={(e) => setBgGradientColor2(e.target.value)}
+                        className="h-8 w-8 border rounded mr-2 cursor-pointer"
+                      />
+                      <input 
+                        type="text" 
+                        value={bgGradientColor2}
+                        onChange={(e) => setBgGradientColor2(e.target.value)}
+                        className="flex-1 p-1 text-xs border rounded dark:bg-gray-600 dark:text-white dark:border-gray-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Additional Options */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4">Additional Options</h3>
+            <div className="space-y-6">
+              {selectedType === 'logo' && (
+                <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <i className="fas fa-image mr-2 text-blue-600 dark:text-blue-400"></i>
+                    Upload Logo (PNG or JPG recommended)
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoChange}
+                    className="w-full p-3 border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg dark:bg-gray-800 dark:text-white hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                  {logoPreview ? (
+                    <div className="mt-4 flex justify-center">
+                      <div className="relative">
+                        <img 
+                          src={logoPreview} 
+                          alt="Logo Preview" 
+                          className="h-20 w-20 object-contain border-2 border-blue-300 dark:border-blue-600 rounded-lg p-2 bg-white dark:bg-gray-800 shadow-md"
+                        />
+                        <div className="absolute -top-2 -right-2 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded-full p-1">
+                          <i className="fas fa-check text-xs"></i>
+                        </div>
+                      </div>
+                    </div>
+                  ) : selectedType === 'logo' && (
+                    <div className="mt-4 text-center text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg border border-amber-200 dark:border-amber-800">
+                      <i className="fas fa-exclamation-triangle mr-2"></i>
+                      Please upload a logo image to use Logo QR Code
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Enhanced Margin Option */}
+              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <div className="mr-3">
+                      <i className="fas fa-expand-arrows-alt text-gray-600 dark:text-gray-400"></i>
+                    </div>
+                    <div>
+                      <label htmlFor="includeMargin" className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+                        Include Margin Around QR Code
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Adds white space padding around the QR code for better readability
+                      </p>
+                    </div>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="includeMargin"
+                      className="sr-only peer"
+                      checked={includeMargin}
+                      onChange={(e) => setIncludeMargin(e.target.checked)}
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
