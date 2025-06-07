@@ -36,6 +36,33 @@ function QRGenerator({ url, qrOptions, onBack, onCreateNew, onHome }) {
       return;
     }
 
+    // Validate colors
+    const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    if (!useGradientDot && dotColor && !hexColorRegex.test(dotColor)) {
+      setError('Invalid dot color format. Please use hex colors (e.g., #FF0000)');
+      return;
+    }
+
+    if (!useGradientBackground && backgroundColor && !hexColorRegex.test(backgroundColor)) {
+      setError('Invalid background color format. Please use hex colors (e.g., #FFFFFF)');
+      return;
+    }
+
+    // Validate gradient colors
+    if (useGradientDot) {
+      if (!hexColorRegex.test(dotGradientColor1) || !hexColorRegex.test(dotGradientColor2)) {
+        setError('Invalid gradient colors. Please use hex colors (e.g., #FF0000)');
+        return;
+      }
+    }
+
+    if (useGradientBackground) {
+      if (!hexColorRegex.test(bgGradientColor1) || !hexColorRegex.test(bgGradientColor2)) {
+        setError('Invalid background gradient colors. Please use hex colors (e.g., #FFFFFF)');
+        return;
+      }
+    }
+
 }
 
 export default QRGenerator;
