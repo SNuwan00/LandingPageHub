@@ -865,3 +865,199 @@ function App() {
               </div>
             </div>
           </div>
+
+          {/* Full Preview Modal - Responsive for Mobile and Desktop */}
+          {showFullPreview && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 modal-backdrop">
+              {/* Desktop Layout */}
+              <div className="hidden lg:flex justify-center items-center p-6 h-full">
+                <div className="relative w-full max-w-6xl h-[92vh] modal-content">
+                  <div className="absolute -top-14 right-0 z-10 flex space-x-3">
+                    <button 
+                      onClick={closeFullPreview} 
+                      className="px-5 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center space-x-2 font-medium"
+                      title="Close full preview"
+                    >
+                      <i className="fas fa-times text-sm"></i>
+                      <span>Close</span>
+                    </button>
+                  </div>
+                  <iframe 
+                    srcDoc={generateHtmlContent()}
+                    className="w-full h-full rounded-2xl border-0 shadow-2xl bg-white"
+                    title="Full Preview"
+                  ></iframe>
+                </div>
+              </div>
+              
+              {/* Mobile Layout */}
+              <div className="lg:hidden flex flex-col h-full">
+                {/* Mobile Header */}
+                <div className="flex items-center justify-between p-4 bg-black/20 backdrop-blur-sm border-b border-white/10">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center">
+                      <i className="fas fa-eye text-white text-sm"></i>
+                    </div>
+                    <div>
+                      <h3 className="text-white font-bold text-lg">Landing Page Preview</h3>
+                      <p className="text-white/70 text-xs">Mobile View</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={closeFullPreview} 
+                    className="w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors duration-300"
+                    title="Close preview"
+                  >
+                    <i className="fas fa-times text-sm"></i>
+                  </button>
+                </div>
+                
+                {/* Mobile Preview Content */}
+                <div className="flex-1 overflow-hidden">
+                  <iframe 
+                    srcDoc={generateHtmlContent()}
+                    className="w-full h-full border-0 bg-white"
+                    title="Mobile Landing Page Preview"
+                  ></iframe>
+                </div>
+                
+                {/* Mobile Footer Info */}
+                <div className="p-3 bg-black/20 backdrop-blur-sm border-t border-white/10">
+                  <div className="flex items-center justify-between text-white/70 text-xs">
+                    <span>Template: <span className="text-blue-400 font-medium">{template.name}</span></span>
+                    <span>Touch to scroll ↕</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Main Content - Responsive Layout */}
+          <div className="flex flex-col lg:flex-row h-auto lg:h-screen desktop-main-container">
+            {/* Left Side / Mobile Full Width - Enhanced Editor */}
+            <div className="w-full lg:w-1/2 lg:h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pb-20 lg:pb-0 desktop-left-panel">
+              <div className="p-3 lg:p-6 space-y-4 lg:space-y-8 max-w-full">
+                
+                {/* Template Selection - Enhanced with Categories */}
+                <div className={`p-4 lg:p-6 rounded-xl lg:rounded-2xl ${darkMode ? 'bg-gray-800/50' : 'bg-white/70'} backdrop-blur-sm shadow-xl border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="flex items-center space-x-2 lg:space-x-3 mb-4 lg:mb-6">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-purple-500' : 'bg-blue-500'} flex items-center justify-center shadow-md`}>
+                      <i className="fas fa-palette text-white text-sm lg:text-lg"></i>
+                    </div>
+                    <h2 className="text-lg lg:text-xl font-bold">Choose Template</h2>
+                  </div>
+                  
+                  {/* Category Filter */}
+                  <div className="mb-4 lg:mb-6">
+                    <div className="flex flex-wrap gap-1 lg:gap-2">
+                      {categories.map(category => (
+                        <button
+                          key={category}
+                          onClick={() => setSelectedCategory(category)}
+                          className={`px-2 lg:px-3 py-1 lg:py-1.5 rounded-md lg:rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                            selectedCategory === category
+                              ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md transform scale-105'
+                              : darkMode
+                                ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          }`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 lg:gap-4 max-h-60 lg:max-h-80 overflow-y-auto scrollbar-thin p-4">
+                    {filteredTemplates.map(t => (
+                      <button
+                        key={t.id}
+                        onClick={() => setTemplate(t)}
+                        className={`relative p-2 lg:p-4 rounded-lg lg:rounded-xl transition-all duration-300 group ${
+                          template.id === t.id 
+                            ? 'ring-2 lg:ring-3 ring-blue-500 scale-105 shadow-xl' 
+                            : 'hover:scale-102 hover:shadow-lg'
+                        } ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} border ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}
+                      >
+                        <div className="text-center">
+                          <div className="text-lg lg:text-2xl mb-1 lg:mb-2">{t.icon}</div>
+                          <span className="block text-xs lg:text-lg font-semibold mb-1 leading-tight">{t.name}</span>
+                          <span className="hidden lg:block text-xs opacity-70 mb-2">{t.description}</span>
+                          <span className={`inline-block px-1 lg:px-2 py-0.5 lg:py-1 rounded-full text-xs font-medium ${
+                            darkMode ? 'bg-gray-600 text-gray-200' : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            {t.category}
+                          </span>
+                        </div>
+                        {template.id === t.id && (
+                          <div className="absolute top-1 right-1 lg:top-2 lg:right-2">
+                            <i className="fas fa-check-circle text-blue-500 text-sm lg:text-lg"></i>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                
+                {/* Business Information - Enhanced */}
+                <div className={`p-4 lg:p-6 rounded-xl lg:rounded-2xl ${darkMode ? 'bg-gray-800/50' : 'bg-white/70'} backdrop-blur-sm shadow-xl border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="flex items-center space-x-2 lg:space-x-3 mb-4 lg:mb-6">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-green-500' : 'bg-green-500'} flex items-center justify-center shadow-md`}>
+                      <i className="fas fa-building text-white text-sm lg:text-lg"></i>
+                    </div>
+                    <h2 className="text-lg lg:text-xl font-bold">Business Information</h2>
+                  </div>
+                  
+                  <div className="space-y-3 lg:space-y-4">
+                    <div>
+                      <label className="block mb-2 font-medium text-xs lg:text-sm">Business Name</label>
+                      <input
+                        type="text"
+                        value={businessName}
+                        onChange={(e) => setBusinessName(e.target.value)}
+                        placeholder="Enter your business name"
+                        className={`w-full p-3 lg:p-4 rounded-lg lg:rounded-xl border transition-all duration-300 focus:ring-2 lg:focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 text-sm lg:text-base ${
+                          darkMode 
+                            ? 'bg-gray-700/50 text-white border-gray-600 placeholder-gray-400' 
+                            : 'bg-white/50 text-gray-800 border-gray-300 placeholder-gray-500'
+                        }`}
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block mb-2 font-medium text-xs lg:text-sm">Introduction Text</label>
+                      <textarea
+                        value={intro}
+                        onChange={(e) => setIntro(e.target.value)}
+                        placeholder="Tell visitors about your business..."
+                        rows="3"
+                        className={`w-full p-3 lg:p-4 rounded-lg lg:rounded-xl border transition-all duration-300 focus:ring-2 lg:focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 resize-none text-sm lg:text-base ${
+                          darkMode 
+                            ? 'bg-gray-700/50 text-white border-gray-600 placeholder-gray-400' 
+                            : 'bg-white/50 text-gray-800 border-gray-300 placeholder-gray-500'
+                        }`}
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block mb-2 font-medium text-xs lg:text-sm">Logo Upload</label>
+                      <div className={`relative border-2 border-dashed rounded-lg lg:rounded-xl p-4 lg:p-6 transition-all duration-300 hover:border-blue-500 ${
+                        darkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-300 bg-gray-50/50'
+                      }`}>
+                        <input
+                          type="file"
+                          onChange={(e) => setLogo(e.target.files[0])}
+                          accept="image/*"
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                        <div className="text-center">
+                          <i className="fas fa-cloud-upload-alt text-2xl lg:text-3xl mb-2 opacity-50"></i>
+                          <p className="text-xs lg:text-sm font-medium">Click or drag to upload logo</p>
+                          <p className="text-xs opacity-70 mt-1">PNG, JPG, JPEG up to 10MB</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
