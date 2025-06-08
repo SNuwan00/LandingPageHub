@@ -116,3 +116,267 @@ const templates = [
     category: "Premium"
   }
 ];
+// Advanced Font Collection with multiple languages
+const fontOptions = {
+  english: [
+    { name: 'Inter', family: 'Inter', category: 'Sans-serif' },
+    { name: 'Poppins', family: 'Poppins', category: 'Sans-serif' },
+    { name: 'Birthstone', family: 'Birthstone', category: 'Handwriting' },
+    { name: 'Alegreya', family: 'Alegreya', category: 'Serif' },
+    { name: 'Special Elite', family: 'Special Elite', category: 'Monospace' },
+    { name: 'Delius', family: 'Delius', category: 'Handwriting' }
+  ],
+  sinhala: [
+    { name: 'Noto Sans Sinhala', family: 'Noto Sans Sinhala', category: 'Sans-serif' },
+    { name: 'Maname', family: 'Maname', category: 'Handwriting' }
+  ],
+  tamil: [
+    { name: 'Katamaran', family: 'Katamaran', category: 'Sans-serif' }
+  ],
+  hindi: [
+    { name: 'Mukta', family: 'Mukta', category: 'Sans-serif' }
+  ]
+};
+
+// Gradient presets for easy selection
+const gradientPresets = [
+  { name: 'Ocean Blue', colors: ['#667eea', '#764ba2'], direction: 'to-br' },
+  { name: 'Sunset', colors: ['#f093fb', '#f5576c'], direction: 'to-r' },
+  { name: 'Purple Rain', colors: ['#a855f7', '#ec4899'], direction: 'to-br' },
+  { name: 'Green Nature', colors: ['#22c55e', '#16a34a'], direction: 'to-r' },
+  { name: 'Fire', colors: ['#f97316', '#ea580c'], direction: 'to-br' },
+  { name: 'Teal Fresh', colors: ['#14b8a6', '#06b6d4'], direction: 'to-r' },
+  { name: 'Royal', colors: ['#3b82f6', '#1d4ed8'], direction: 'to-br' },
+  { name: 'Rose Gold', colors: ['#f43f5e', '#be185d'], direction: 'to-r' }
+];
+
+const socialIconOptions = [
+  { value: 'fas fa-external-link-alt', label: 'Link' },
+  { value: 'fab fa-facebook-f',         label: 'Facebook' },
+  { value: 'fab fa-youtube',            label: 'YouTube' },
+  { value: 'fas fa-globe',              label: 'Website' },
+  { value: 'fab fa-instagram',         label: 'Instagram' },
+  { value: 'fab fa-twitter',           label: 'Twitter' }
+];
+
+function App() {
+  const [template, setTemplate] = useState(templates[0]);
+  const [businessName, setBusinessName] = useState('');
+  const [intro, setIntro] = useState('');
+  const [links, setLinks] = useState([{ text: '', url: '', icon: 'fas fa-external-link-alt' }]);
+  const [color, setColor] = useState('#ffffff');
+  const [ptColor, setPTColor] = useState('#1f2937');
+  const [btColor, setBTColor] = useState('#ffffff');
+  const [bColor, setBColor] = useState('#6366f1');
+  const [logo, setLogo] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [pageName, setPageName] = useState('');
+  const [darkMode, setDarkMode] = useState(false);
+  const [showFullPreview, setShowFullPreview] = useState(false);
+  const [successUrl, setSuccessUrl] = useState(null);
+  // Pro modal state
+  const [showProModal, setShowProModal] = useState(false);
+  const [showQRSelector, setShowQRSelector] = useState(false);
+  const [showQRGenerator, setShowQRGenerator] = useState(false);
+  const [qrOptions, setQrOptions] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [animationStyle, setAnimationStyle] = useState('fade');
+  const [fontStyle, setFontStyle] = useState('Inter');
+  const [buttonStyle, setButtonStyle] = useState('rounded-xl');
+  const [shadowIntensity, setShadowIntensity] = useState('medium');
+  
+  // Advanced customization states - Enhanced with gradient support
+  const [useGradientBackground, setUseGradientBackground] = useState(false);
+  const [gradientColor1, setGradientColor1] = useState('#667eea');
+  const [gradientColor2, setGradientColor2] = useState('#764ba2');
+  const [gradientDirection, setGradientDirection] = useState('to-br');
+  const [useGradientButton, setUseGradientButton] = useState(false);
+  const [buttonGradientColor1, setButtonGradientColor1] = useState('#6366f1');
+  const [buttonGradientColor2, setButtonGradientColor2] = useState('#8b5cf6');
+  
+  const borderRadius = 12;
+  const containerPadding = 32;
+  const fontFamily = fontStyle;
+  
+  // Template categories for filtering
+  const categories = ['All', 'Classic', 'Professional', 'Modern', 'Nature', 'Warm', 'Cool', 'Fresh', 'Premium'];
+  
+  // Filter templates by category
+  const filteredTemplates = selectedCategory === 'All' 
+    ? templates 
+    : templates.filter(t => t.category === selectedCategory);
+
+  // Check for user's preferred color scheme on initial load
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+  // Open and close Pro modal handlers
+  const handleProOpen = () => setShowProModal(true);
+  const handleProClose = () => setShowProModal(false);
+
+  // Apply dark mode class to body element
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
+
+  // Generate logo preview when logo is selected
+  useEffect(() => {
+    if (logo) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLogoPreview(e.target.result);
+      };
+      reader.readAsDataURL(logo);
+    }
+  }, [logo]);
+
+  const addLink = () => {
+    if (links.length < 6) {
+      setLinks([...links, { text: '', url: '', icon: 'fas fa-external-link-alt' }]);
+    }
+  };
+  
+  const removeLink = (index) => {
+    if (links.length > 1) {
+      const newLinks = links.filter((_, i) => i !== index);
+      setLinks(newLinks);
+    }
+  };
+
+  const updateLink = (index, field, value) => {
+    const newLinks = [...links];
+    newLinks[index][field] = value;
+    setLinks(newLinks);
+  };
+
+  const validateForm = () => {
+    // Check page name
+    if (!pageName || pageName.trim().length < 3) {
+      alert('Please enter a page name with at least 3 characters');
+      return false;
+    }
+    
+    // Check for valid page name format (alphanumeric, hyphens, underscores only)
+    if (!/^[a-zA-Z0-9_-]+$/.test(pageName.trim())) {
+      alert('Page name can only contain letters, numbers, hyphens, and underscores');
+      return false;
+    }
+    
+    // Check business name
+    if (!businessName || businessName.trim().length < 2) {
+      alert('Please enter a business name with at least 2 characters');
+      return false;
+    }
+    
+    // Check intro
+    if (!intro || intro.trim().length < 10) {
+      alert('Please enter an introduction with at least 10 characters');
+      return false;
+    }
+    
+    // Validate links
+    const validLinks = links.filter(link => link.text.trim() && link.url.trim());
+    if (validLinks.length === 0) {
+      alert('Please add at least one valid link');
+      return false;
+    }
+    
+    // Validate URL format
+    for (let link of validLinks) {
+      const url = link.url.trim();
+      
+      // Check if URL starts with http:// or https://
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        alert(`Please enter a complete URL for "${link.text}" (must start with http:// or https://)`);
+        return false;
+      }
+      
+      try {
+        new URL(url);
+      } catch {
+        alert(`Please enter a valid URL for "${link.text}"`);
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
+  const checkPageNameExists = async (name) => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      console.log('Checking page name:', name, 'at:', `${apiUrl}/check-page-name/${encodeURIComponent(name)}`);
+      
+      const response = await fetch(`${apiUrl}/check-page-name/${encodeURIComponent(name)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Page name check response:', data);
+      return data.exists;
+    } catch (error) {
+      console.error('Error checking page name:', error);
+      console.error('Error details:', error.message);
+      // Return false to allow proceeding if check fails
+      return false;
+    }
+  };
+
+  const handleSave = async () => {
+    // Validate form
+    if (!validateForm()) return;
+    
+    // Check if page name already exists
+    const pageExists = await checkPageNameExists(pageName.trim());
+    if (pageExists) {
+      alert('A page with this name already exists. Please choose a different name.');
+      return;
+    }
+    
+    // Filter out empty links
+    const validLinks = links.filter(link => link.text.trim() && link.url.trim());
+    
+    const formData = new FormData();
+    formData.append('name', pageName.trim());
+    formData.append('businessName', businessName.trim());
+    formData.append('intro', intro.trim());
+    formData.append('links', JSON.stringify(validLinks));
+    formData.append('color', color);
+    formData.append('ptColor', ptColor);
+    formData.append('btColor', btColor);
+    formData.append('bColor', bColor);
+    formData.append('template', template.name);
+    if (logo) formData.append('logo', logo);
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      console.log('Submitting to:', `${apiUrl}/save-landing`);
+      
+      const res = await axios.post(`${apiUrl}/save-landing`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        timeout: 30000, // 30 second timeout
+        withCredentials: true,
+      });
+      
