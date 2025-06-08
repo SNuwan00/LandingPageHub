@@ -1061,3 +1061,266 @@ function App() {
                     </div>
                   </div>
                 </div>
+                 {/* Links Management - Enhanced */}
+                <div className={`p-4 lg:p-6 rounded-xl lg:rounded-2xl ${darkMode ? 'bg-gray-800/50' : 'bg-white/70'} backdrop-blur-sm shadow-xl border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="flex items-center justify-between mb-4 lg:mb-6">
+                    <div className="flex items-center space-x-2 lg:space-x-3">
+                      <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-purple-500' : 'bg-purple-500'} flex items-center justify-center shadow-md`}>
+                        <i className="fas fa-link text-white text-sm lg:text-lg"></i>
+                      </div>
+                      <h2 className="text-lg lg:text-xl font-bold">Social Links</h2>
+                    </div>
+                    <button
+                      onClick={addLink}
+                      className="px-3 lg:px-5 py-2 lg:py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg lg:rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-md text-xs lg:text-sm font-medium flex items-center space-x-1 lg:space-x-2"
+                      disabled={links.length >= 6}
+                    >
+                      <i className="fas fa-plus text-xs"></i>
+                      <span className="hidden lg:inline">Add Link</span>
+                      <span className="lg:hidden">Add</span>
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-3 lg:space-y-4 max-h-80 overflow-y-auto scrollbar-thin">
+                    {links.map((link, index) => (
+                      <div key={index} className={`p-3 lg:p-4 rounded-lg lg:rounded-xl ${darkMode ? 'bg-gray-700/30' : 'bg-gray-50/50'} border ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-medium text-xs lg:text-sm">Link {index + 1}</span>
+                          {links.length > 1 && (
+                            <button
+                              onClick={() => removeLink(index)}
+                              className="text-red-500 hover:text-red-700 transition-colors p-1"
+                            >
+                              <i className="fas fa-trash text-xs"></i>
+                            </button>
+                          )}
+                        </div>
+                        
+                        <div className="space-y-2 lg:space-y-3">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-3">
+                            <div className="lg:col-span-1">
+                              <label className="block text-xs font-medium mb-1">Icon</label>
+                              <select
+                                value={link.icon}
+                                onChange={(e) => updateLink(index, 'icon', e.target.value)}
+                                className={`w-full p-2 lg:p-2.5 rounded-lg border text-xs lg:text-sm ${
+                                  darkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-800 border-gray-300'
+                                }`}
+                              >
+                                {socialIconOptions.map(option => (
+                                  <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                              </select>
+                            </div>
+                            
+                            <div className="lg:col-span-2">
+                              <label className="block text-xs font-medium mb-1">Link Text</label>
+                              <input
+                                type="text"
+                                value={link.text}
+                                onChange={(e) => updateLink(index, 'text', e.target.value)}
+                                placeholder="e.g., Visit Website"
+                                className={`w-full p-2 lg:p-2.5 rounded-lg border text-xs lg:text-sm ${
+                                  darkMode ? 'bg-gray-700 text-white border-gray-600 placeholder-gray-400' : 'bg-white text-gray-800 border-gray-300 placeholder-gray-500'
+                                }`}
+                              />
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-xs font-medium mb-1">URL</label>
+                            <input
+                              type="url"
+                              value={link.url}
+                              onChange={(e) => updateLink(index, 'url', e.target.value)}
+                              placeholder="https://example.com"
+                              className={`w-full p-2 lg:p-2.5 rounded-lg border text-xs lg:text-sm ${
+                                darkMode ? 'bg-gray-700 text-white border-gray-600 placeholder-gray-400' : 'bg-white text-gray-800 border-gray-300 placeholder-gray-500'
+                              }`}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Advanced Customization - Enhanced & Responsive */}
+                <div className={`p-4 lg:p-6 rounded-xl lg:rounded-2xl ${darkMode ? 'bg-gray-800/50' : 'bg-white/70'} backdrop-blur-sm shadow-xl border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="flex items-center space-x-2 lg:space-x-3 mb-4 lg:mb-6">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-pink-500' : 'bg-pink-500'} flex items-center justify-center shadow-md`}>
+                      <i className="fas fa-paint-brush text-white text-sm lg:text-lg"></i>
+                    </div>
+                    <h2 className="text-lg lg:text-xl font-bold">Advanced Customization</h2>
+                  </div>
+                  
+                  {/* Style Options */}
+                  <div className="space-y-4 lg:space-y-6">
+                    <div>
+                      <label className="block text-xs lg:text-sm font-medium mb-2 lg:mb-3">Animation Style</label>
+                      <div className="grid grid-cols-3 gap-1 lg:gap-2">
+                        {['fade', 'slide', 'bounce'].map(style => (
+                          <button
+                            key={style}
+                            onClick={() => setAnimationStyle(style)}
+                            className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                              animationStyle === style
+                                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md'
+                                : darkMode
+                                  ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                          >
+                            {style.charAt(0).toUpperCase() + style.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs lg:text-sm font-medium mb-2 lg:mb-3">Font Family</label>
+                      
+                      {/* English Fonts */}
+                      <div className="mb-3">
+                        <h4 className="text-xs font-medium text-gray-500 mb-2">English Fonts</h4>
+                        <div className="grid grid-cols-3 lg:grid-cols-2 gap-1 lg:gap-2">
+                          {fontOptions.english.map(font => (
+                            <button
+                              key={font.family}
+                              onClick={() => setFontStyle(font.family)}
+                              className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                                fontStyle === font.family
+                                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md'
+                                  : darkMode
+                                    ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              }`}
+                              style={{ fontFamily: font.family }}
+                              title={`${font.name} - ${font.category}`}
+                            >
+                              {font.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Sinhala Fonts */}
+                      <div className="mb-3">
+                        <h4 className="text-xs font-medium text-gray-500 mb-2">සිංහල Fonts</h4>
+                        <div className="grid grid-cols-2 gap-1 lg:gap-2">
+                          {fontOptions.sinhala.map(font => (
+                            <button
+                              key={font.family}
+                              onClick={() => setFontStyle(font.family)}
+                              className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                                fontStyle === font.family
+                                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md'
+                                  : darkMode
+                                    ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              }`}
+                              style={{ fontFamily: font.family }}
+                              title={`${font.name} - ${font.category}`}
+                            >
+                              {font.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Tamil Font */}
+                      <div className="mb-3">
+                        <h4 className="text-xs font-medium text-gray-500 mb-2">தமிழ் Font</h4>
+                        <div className="grid grid-cols-1 gap-1 lg:gap-2">
+                          {fontOptions.tamil.map(font => (
+                            <button
+                              key={font.family}
+                              onClick={() => setFontStyle(font.family)}
+                              className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                                fontStyle === font.family
+                                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md'
+                                  : darkMode
+                                    ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              }`}
+                              style={{ fontFamily: font.family }}
+                              title={`${font.name} - ${font.category}`}
+                            >
+                              {font.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Hindi Font */}
+                      <div>
+                        <h4 className="text-xs font-medium text-gray-500 mb-2">हिंदी Font</h4>
+                        <div className="grid grid-cols-1 gap-1 lg:gap-2">
+                          {fontOptions.hindi.map(font => (
+                            <button
+                              key={font.family}
+                              onClick={() => setFontStyle(font.family)}
+                              className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                                fontStyle === font.family
+                                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md'
+                                  : darkMode
+                                    ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              }`}
+                              style={{ fontFamily: font.family }}
+                              title={`${font.name} - ${font.category}`}
+                            >
+                              {font.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs lg:text-sm font-medium mb-2 lg:mb-3">Button Style</label>
+                      <div className="grid grid-cols-3 gap-1 lg:gap-2">
+                        {[
+                          { value: 'rounded-lg', label: 'Round' },
+                          { value: 'rounded-xl', label: 'Modern' },
+                          { value: 'rounded-full', label: 'Pill' }
+                        ].map(style => (
+                          <button
+                            key={style.value}
+                            onClick={() => setButtonStyle(style.value)}
+                            className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                              buttonStyle === style.value
+                                ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-md'
+                                : darkMode
+                                  ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                          >
+                            {style.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs lg:text-sm font-medium mb-2 lg:mb-3">Shadow Intensity</label>
+                      <div className="grid grid-cols-3 gap-1 lg:gap-2">
+                        {['light', 'medium', 'heavy'].map(intensity => (
+                          <button
+                            key={intensity}
+                            onClick={() => setShadowIntensity(intensity)}
+                            className={`p-2 lg:p-3 rounded-lg text-xs lg:text-sm font-medium transition-all duration-300 ${
+                              shadowIntensity === intensity
+                                ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-md'
+                                : darkMode
+                                  ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                          >
+                            {intensity.charAt(0).toUpperCase() + intensity.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
