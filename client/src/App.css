@@ -1,2 +1,1050 @@
 @import "tailwindcss";
 
+/* Enhanced body styles with CSB branding */
+body.dark-mode {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #374151 100%);
+  color: white;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Enhanced scrollbar styling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-gray-300 {
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+/* Enhanced dark mode form styles */
+.dark-mode input[type="text"],
+.dark-mode input[type="url"],
+.dark-mode input[type="email"],
+.dark-mode textarea {
+  background-color: #374151;
+  color: white;
+  border-color: #6b7280;
+  backdrop-filter: blur(10px);
+}
+
+.dark-mode input[type="text"]:focus,
+.dark-mode input[type="url"]:focus,
+.dark-mode input[type="email"]:focus,
+.dark-mode textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Enhanced file input styles */
+.dark-mode input[type="file"]::file-selector-button {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dark-mode input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  transform: translateY(-1px);
+}
+
+/* Enhanced preview container styles */
+.preview-container {
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .preview-container {
+  background: rgba(55, 65, 81, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced modal styles */
+.modal-backdrop {
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  animation: scaleIn 0.3s ease;
+  position: relative; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { 
+    transform: scale(0.95); 
+    opacity: 0; 
+  }
+  to { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+/* Enhanced button hover effects */
+.hover\:scale-102:hover {
+  transform: scale(1.02);
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* Enhanced shadow effects */
+.shadow-glow {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.dark-mode .shadow-glow {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Enhanced gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced QR code styling with better visual effects */
+.qr-container {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.qr-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Standard QR Code - clean and sharp */
+.qr-standard svg {
+  filter: contrast(1.1) brightness(1.02);
+}
+
+/* Dots QR Code - circular modules with aggressive styling */
+.qr-dots svg rect {
+  rx: 50% !important;
+  ry: 50% !important;
+  transform-origin: center;
+  border-radius: 50% !important;
+}
+
+.qr-dots svg path {
+  rx: 50% !important;
+  ry: 50% !important;
+  border-radius: 50% !important;
+}
+
+/* Force all QR modules to be circles for dots type */
+.qr-dots svg rect[fill]:not([fill="none"]):not([fill="transparent"]) {
+  rx: 50% !important;
+  ry: 50% !important;
+  border-radius: 50% !important;
+}
+
+.qr-dots:hover svg rect,
+.qr-dots:hover svg path {
+  animation: dotPulse 0.6s ease-in-out;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Rounded QR Code - soft rounded corners */
+.qr-rounded svg {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.qr-rounded svg rect {
+  rx: 3 !important;
+  ry: 3 !important;
+}
+
+.qr-rounded svg path {
+  rx: 3 !important;
+  ry: 3 !important;
+}
+
+/* Apply rounded corners to all QR modules */
+.qr-rounded svg rect[fill]:not([fill="none"]):not([fill="transparent"]) {
+  rx: 3 !important;
+  ry: 3 !important;
+}
+
+/* Colored QR Code - enhanced vibrancy */
+.qr-colored svg {
+  filter: contrast(1.15) brightness(1.05) saturate(1.2) hue-rotate(5deg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qr-colored svg rect,
+.qr-colored svg path {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* Micro QR Code - crisp and compact */
+.qr-micro svg {
+  filter: contrast(1.25) brightness(1.08);
+  border-radius: 6px;
+}
+
+/* Enhanced glassmorphism effects */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced loading animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Enhanced responsive design utilities */
+@media (max-width: 640px) {
+  .responsive-text {
+    font-size: 0.875rem;
+  }
+  
+  .responsive-padding {
+    padding: 1rem;
+  }
+}
+
+/* Enhanced focus states */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #6366f1;
+}
+
+.dark-mode .focus-ring:focus {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Fix input colors in dark mode */
+.dark-mode input[type="color"] {
+  background-color: transparent;
+}
+
+/* Styles for the full preview modal */
+.modal-backdrop {
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  animation: scaleIn 0.3s ease;
+  position: relative; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.iframe-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+
+/* For QR code styling */
+.qr-rounded svg path:not([stroke]) {
+  border-radius: 4px !important;
+}
+
+.qr-dots svg path:not([stroke]) {
+  border-radius: 50% !important;
+}
+
+/* === UI Adjustments for Modern Feel (June 2025) === */
+
+/* Modal Close Button Adjustments - Fixed positioning and improved visibility */
+.modal-backdrop .modal-content .absolute.-top-14 {
+  top: -3.5rem; /* Bring it closer to the modal content */
+}
+
+.modal-backdrop .modal-content button {
+  position: relative;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-backdrop .modal-content button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure modal close button is always visible */
+.modal-backdrop {
+  z-index: 9999;
+}
+
+.modal-content {
+  z-index: 10000;
+}
+
+/* Header Icon Adjustments - Modern sizing and spacing */
+.header-icon {
+  width: 20px;   /* More proportional size for header icons */
+  height: 20px;  /* Square aspect ratio */
+  vertical-align: middle;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0.9;
+  margin: 0 2px; /* Subtle spacing between icons */
+}
+
+.header-icon:hover {
+  transform: scale(1.1); /* Subtle hover effect */
+  opacity: 1;
+}
+
+/* If your icons are <img> tags and you need to control aspect ratio: */
+.header-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Button icons adjustments for better sizing */
+button i {
+  width: auto;
+  height: auto;
+  line-height: 1;
+}
+
+/* Header logo icon specific styling */
+.header-logo-icon {
+  width: 24px;   /* Slightly larger for main logo */
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.header-logo-icon:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Modal close button improvements */
+.modal-close-button {
+  top: -3rem !important; /* Better positioning for desktop view */
+  right: 0;
+  z-index: 1000;
+}
+
+/* Responsive adjustments for modal close button */
+@media (max-width: 768px) {
+  .modal-close-button {
+    top: -2.5rem !important;
+  }
+}
+
+/* === Enhanced UI Adjustments === */
+
+/* Better modal close button positioning for full preview */
+.modal-backdrop .absolute.-top-14 {
+  top: -1rem !important; /* Much closer to content for better visibility */
+}
+
+.modal-backdrop .modal-content .absolute {
+  position: absolute;
+  z-index: 1001;
+}
+
+.modal-backdrop .modal-content button {
+  backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important; /* Keep the red color */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  color: white !important;
+}
+
+.modal-backdrop .modal-content button:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important; /* Darker red on hover */
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.3);
+}
+
+/* Header icon size improvements */
+.fas.fa-rocket,
+.fas.fa-sun,
+.fas.fa-moon,
+.fas.fa-expand-alt {
+  font-size: 1.1rem !important; /* Slightly smaller for better proportion */
+}
+
+/* Button icon consistency */
+button .fas {
+  font-size: 0.9rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* Icon button improvements */
+button i.text-sm {
+  font-size: 0.85rem !important;
+}
+
+button i.text-lg {
+  font-size: 1.1rem !important;
+}
+
+button i.text-xl {
+  font-size: 1.25rem !important;
+}
+
+/* Section header icons */
+.w-10.h-10 i {
+  font-size: 1rem !important;
+}
+
+/* Dark mode modal adjustments */
+.dark-mode .modal-backdrop .modal-content button {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important; /* Keep red color in dark mode too */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f9fafb;
+}
+
+.dark-mode .modal-backdrop .modal-content button:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important; /* Darker red on hover */
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* === End Enhanced UI Adjustments === */
+
+/* === Enhanced QR Code Type Styling === */
+
+/* Base QR container */
+.qr-container {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.qr-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Standard QR Code - clean and sharp */
+.qr-standard svg {
+  filter: contrast(1.1) brightness(1.02);
+}
+
+/* Dots QR Code - circular modules with smooth transitions */
+.qr-dots svg rect {
+  rx: 50% !important;
+  ry: 50% !important;
+  transform-origin: center;
+}
+
+.qr-dots svg path {
+  rx: 50% !important;
+  ry: 50% !important;
+}
+
+.qr-dots:hover svg rect,
+.qr-dots:hover svg path {
+  animation: dotPulse 0.6s ease-in-out;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Rounded QR Code - soft rounded corners */
+.qr-rounded svg {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.qr-rounded svg rect {
+  rx: 3 !important;
+  ry: 3 !important;
+}
+
+.qr-rounded svg path {
+  rx: 3 !important;
+  ry: 3 !important;
+}
+
+/* Colored QR Code - enhanced vibrancy */
+.qr-colored svg {
+  filter: contrast(1.15) brightness(1.05) saturate(1.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qr-colored svg rect,
+.qr-colored svg path {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* Micro QR Code - crisp and compact */
+.qr-micro svg {
+  filter: contrast(1.25) brightness(1.08);
+  border-radius: 6px;
+}
+
+.qr-micro svg rect,
+.qr-micro svg path {
+  shape-rendering: crispEdges;
+}
+
+/* Logo QR Code - professional styling with logo enhancement */
+.qr-logo svg {
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.qr-logo svg image {
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Mobile responsiveness for QR codes */
+@media (max-width: 640px) {
+  .qr-container {
+    padding: 0.75rem !important;
+  }
+  
+  .qr-rounded,
+  .qr-dots,
+  .qr-colored,
+  .qr-logo,
+  .qr-micro {
+    transform: scale(0.9);
+  }
+  
+  .qr-container:hover {
+    transform: translateY(-1px) scale(0.9);
+  }
+}
+
+/* Dark mode QR adjustments */
+.dark-mode .qr-rounded,
+.dark-mode .qr-logo {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .qr-micro {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-mode .qr-container {
+  background: rgba(31, 41, 55, 0.8) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* === End Enhanced QR Code Type Styling === */
+
+/* === QR Generator Enhancements === */
+
+/* Copy button styling */
+.copy-button {
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  transform: scale(1.05);
+}
+
+.copy-button.success {
+  animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Navigation buttons enhancement */
+.nav-button {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-button:hover:before {
+  left: 100%;
+}
+
+/* QR Preview container enhancement */
+.qr-preview-container {
+  transition: all 0.3s ease;
+  border: 2px dashed transparent;
+}
+
+.qr-preview-container:hover {
+  border-color: #3b82f6;
+  transform: scale(1.02);
+}
+
+/* Mobile Specific Layout Adjustments */
+@media (max-width: 640px) {
+  .links-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .footer {
+    position: relative;
+    margin-top: 20px;
+    bottom: auto;
+    left: auto;
+    transform: none;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+
+/* Mobile Preview Modal Enhancements */
+.modal-backdrop {
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 1024px) {
+  .modal-backdrop {
+    /* Mobile modal takes full screen */
+    padding: 0;
+  }
+  
+  .modal-backdrop .modal-content {
+    height: 100vh;
+    max-width: none;
+    border-radius: 0;
+  }
+  
+  /* Enhance mobile modal header */
+  .modal-backdrop .mobile-header {
+    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Mobile preview iframe smooth scrolling */
+  .modal-backdrop iframe {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Enhanced mobile responsive design */
+@media (max-width: 640px) {
+  /* Ensure mobile scrolling works properly */
+  html, body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  /* Sticky mobile preview button */
+  .mobile-preview-btn {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 30;
+    backdrop-filter: blur(12px);
+    border-radius: 0.75rem;
+  }
+  
+  /* Mobile form adjustments */
+  .mobile-form-container {
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Mobile grid layouts */
+  .mobile-grid-adjust {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  /* Mobile text sizing */
+  .mobile-text-sm {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  /* Ensure mobile viewport compliance */
+  .mobile-viewport-fix {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  
+  /* Mobile touch targets */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mobile safe areas */
+  .mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Enhanced mobile modal styles */
+.mobile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+  animation: modalFadeIn 0.3s ease-out;
+  overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
+}
+
+.mobile-modal-content {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for better mobile support */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mobile-modal-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: white;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Mobile modal header */
+.mobile-modal-header {
+  padding: env(safe-area-inset-top) 1rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* Mobile modal footer */
+.mobile-modal-footer {
+  padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom)) 1rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+@keyframes modalFadeIn {
+  from { 
+    opacity: 0; 
+    backdrop-filter: blur(0px);
+  }
+  to { 
+    opacity: 1; 
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Enhanced mobile touch interactions */
+@media (max-width: 768px) {
+  .touch-optimized {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Better tap highlighting */
+  button, .button {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.3);
+  }
+}
+
+/* Final responsive polish */
+@media (max-width: 480px) {
+  .ultra-mobile {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  .mobile-preview-btn button {
+    font-size: 16px;
+    padding: 16px 20px;
+  }
+}
+
+/* Enhanced desktop preview panel */
+@media (min-width: 1024px) {
+  .desktop-preview-panel {
+    min-height: calc(100vh - 88px);
+  }
+  
+  .desktop-preview-iframe {
+    width: 350px;
+    height: 600px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .desktop-preview-iframe {
+    width: 380px;
+    height: 650px;
+  }
+}
+
+/* Responsive iframe sizing for different screen sizes */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .desktop-preview-iframe {
+    width: 280px;
+    height: 500px;
+  }
+}
+
+/* Desktop layout debugging and fixes */
+@media (min-width: 1024px) {
+  /* Force desktop layout container */
+  .desktop-main-container {
+    display: flex !important;
+    flex-direction: row !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+  
+  /* Desktop left panel - force half width */
+  .desktop-left-panel {
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    overflow-y: auto !important;
+    height: 100vh !important;
+  }
+  
+  /* Desktop right panel - force visibility and layout with improved styling */
+  .desktop-right-panel {
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    padding: 24px 24px 24px 0 !important; /* Top, Right, Bottom, Left padding - increased from 16px to 24px */
+  }
+  
+  /* Force desktop preview panel visibility with rounded corners */
+  .desktop-preview-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important; /* Rounded corners */
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  /* Override any Tailwind hidden classes on desktop - more specific selectors */
+  div.hidden.lg\:flex.desktop-right-panel {
+    display: flex !important;
+  }
+  
+  div.hidden.lg\:flex.desktop-preview-panel {
+    display: flex !important;
+  }
+  
+  /* Ensure the iframe container gets proper sizing */
+  .desktop-preview-panel .flex-1 {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Additional override for any potential flex issues */
+  .desktop-main-container > .desktop-left-panel {
+    display: block !important;
+  }
+  
+  .desktop-main-container > .desktop-right-panel {
+    display: flex !important;
+  }
+  
+  /* Enhanced iframe styling within the rounded container */
+  .desktop-preview-panel iframe {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Improve the header section of the preview panel */
+  .desktop-preview-panel > div:first-child {
+    border-radius: 20px 20px 0 0 !important;
+  }
+  
+  /* Improve the footer section of the preview panel */
+  .desktop-preview-panel > div:last-child {
+    border-radius: 0 0 20px 20px !important;
+  }
+}
+
+/* Tailwind responsive debugging */
+@media (min-width: 1024px) {
+  /* Debug Tailwind lg: breakpoint */
+  .lg\:flex {
+    display: flex !important;
+  }
+  
+  .lg\:w-1\/2 {
+    width: 50% !important;
+  }
+  
+  .lg\:h-full {
+    height: 100% !important;
+  }
+  
+  .hidden.lg\:flex {
+    display: flex !important;
+  }
+}
+
+/* Additional desktop layout enforcement */
+@media (min-width: 1024px) {
+  .desktop-layout-fix {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .desktop-layout-fix > div:first-child {
+    width: 50%;
+    overflow-y: auto;
+  }
+  
+  .desktop-layout-fix > div:last-child {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgba(156, 163, 175, 0.2);
+  }
+}
