@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import SuccessPage from './QRGenerator.jsx'; // Import the SuccessPage component
 import QRTypeSelector from './QRTypeSelector';
 import QRGenerator from './QRGenerator';
 
