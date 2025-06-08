@@ -116,6 +116,7 @@ const templates = [
     category: "Premium"
   }
 ];
+
 // Advanced Font Collection with multiple languages
 const fontOptions = {
   english: [
@@ -380,3 +381,487 @@ function App() {
         withCredentials: true,
       });
       
+      console.log('Response:', res.data);
+      setSuccessUrl(res.data.url);
+      setShowQRSelector(true); // Go to QR selector first
+    } catch (error) {
+      console.error('Error details:', error);
+      if (error.response) {
+        // Server responded with error status
+        alert(`Error: ${error.response.data?.error || 'Server error'}`);
+      } else if (error.request) {
+        // Request was made but no response received
+        alert('Network error: Unable to connect to server. Please check your connection and try again.');
+      } else {
+        // Something else happened
+        alert(`Error: ${error.message}`);
+      }
+    }
+  };
+
+  const generateHtmlContent = () => {
+    // Advanced template-specific styling with new templates
+    let pageBackground = "";
+    
+    switch (template.name) {
+      case "Minimal":
+        pageBackground = "background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);";
+        break;
+      case "Dark Pro":
+        pageBackground = "background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #374151 100%);";
+        break;
+      case "Cyberpunk":
+        pageBackground = "background: #000000; background-image: radial-gradient(circle at 25% 25%, #00ffff 0%, transparent 50%), radial-gradient(circle at 75% 75%, #ff00ff 0%, transparent 50%);";
+        break;
+      case "Nature Zen":
+        pageBackground = "background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);";
+        break;
+      case "Golden Hour":
+        pageBackground = "background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fed7aa 100%);";
+        break;
+      case "Deep Ocean":
+        pageBackground = "background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);";
+        break;
+      case "Aurora":
+        pageBackground = "background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%);";
+        break;
+      case "Mint Fresh":
+        pageBackground = "background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #a7f3d0 100%)";
+        break;
+      case "Glassmorphism":
+        pageBackground = "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+        break;
+      default:
+        pageBackground = "background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);";
+    }
+    
+    // Dynamic shadow based on template and intensity
+    const getShadowStyle = () => {
+      const intensityMap = {
+        'light': '0 10px 25px -12px rgba(0, 0, 0, 0.15)',
+        'medium': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        'heavy': '0 35px 60px -12px rgba(0, 0, 0, 0.35)'
+      };
+      
+      if (template.name === "Cyberpunk") {
+        return `box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2);`;
+      } else if (template.name === "Glassmorphism") {
+        return `box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);`;
+      }
+      
+      return `box-shadow: ${intensityMap[shadowIntensity] || intensityMap.medium}, 0 0 0 1px rgba(255, 255, 255, 0.1);`;
+    };
+    
+    // Animation styles based on selection
+    const getAnimationKeyframes = () => {
+      switch (animationStyle) {
+        case 'slide':
+          return `
+            @keyframes slideInUp {
+              from { opacity: 0; transform: translateY(50px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideInLeft {
+              from { opacity: 0; transform: translateX(-50px); }
+              to { opacity: 1; transform: translateX(0); }
+            }`;
+        case 'bounce':
+          return `
+            @keyframes bounceIn {
+              0% { opacity: 0; transform: scale(0.3); }
+              50% { opacity: 1; transform: scale(1.05); }
+              70% { transform: scale(0.9); }
+              100% { opacity: 1; transform: scale(1); }
+            }`;
+        case 'fade':
+        default:
+          return `
+            @keyframes fadeInUp {
+              from { opacity: 0; transform: translateY(30px); }
+              to { opacity: 1; transform: translateY(0); }
+            }`;
+      }
+    };
+    
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${businessName || "Landing Page"}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Birthstone:wght@400;700&family=Alegreya:wght@400;500;700&family=Special+Elite:wght@400&family=Delius:wght@400&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&family=Maname:wght@400&family=Katamaran:wght@300;400;500;600;700&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <style>
+          ${getAnimationKeyframes()}
+          
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          
+          body {
+            ${pageBackground}
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Change from center to flex-start for better scrolling */
+            font-family: '${fontFamily}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto; /* Allow vertical scrolling */
+          }
+          
+          body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+          }
+          
+          #container {
+            background: ${useGradientBackground 
+              ? `linear-gradient(${gradientDirection.includes('to-r') ? 'to right' : gradientDirection.includes('to-br') ? 'to bottom right' : 'to bottom'}, ${gradientColor1}, ${gradientColor2})`
+              : color};
+            color: ${ptColor};
+            width: 100%;
+            max-width: 420px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: ${containerPadding}px;
+            border-radius: ${borderRadius}px;
+            ${getShadowStyle()}
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: ${animationStyle === 'slide' ? 'slideInUp' : animationStyle === 'bounce' ? 'bounceIn' : 'fadeInUp'} 0.8s ease-out;
+            margin: 20px auto; /* Add margin for better spacing when scrolling */
+          }
+          
+          #container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+          }
+          
+          .logo-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 24px auto;
+            position: relative;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            padding: 4px;
+            animation: logoFloat 3s ease-in-out infinite;
+          }
+          
+          .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+          
+          h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            background: linear-gradient(135deg, ${ptColor}, ${ptColor}99);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+          }
+          
+          .intro-text {
+            margin-bottom: 32px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 300px;
+            animation: ${animationStyle === 'slide' ? 'slideInLeft' : animationStyle === 'bounce' ? 'bounceIn' : 'fadeInUp'} 0.6s ease-out 0.2s both;
+          }
+          
+          .links-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+          
+          .link-item {
+            background: ${useGradientButton 
+              ? `linear-gradient(to right, ${buttonGradientColor1}, ${buttonGradientColor2})`
+              : bColor};
+            color: ${btColor};
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: ${buttonStyle === 'rounded-full' ? '50px' : buttonStyle === 'rounded-xl' ? '12px' : '6px'};
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: ${animationStyle === 'slide' ? 'slideInUp' : animationStyle === 'bounce' ? 'bounceIn' : 'fadeInUp'} 0.6s ease-out forwards;
+            animation-delay: calc(var(--delay) * 0.1s + 0.4s);
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          
+          .link-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+          }
+          
+          .link-item:hover:before {
+            left: 100%;
+          }
+          
+          .link-item:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            filter: brightness(1.1);
+          }
+          
+          .link-item:active {
+            transform: translateY(-1px) scale(0.98);
+          }
+          
+          @keyframes logoFloat {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-5px);
+            }
+          }
+          
+          @keyframes titleGlow {
+            0% {
+              text-shadow: 0 0 5px rgba(0,0,0,0.1);
+            }
+            100% {
+              text-shadow: 0 0 20px rgba(0,0,0,0.2);
+            }
+          }
+          
+          .footer {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            opacity: 0.6;
+            text-align: center;
+            white-space: nowrap;
+          }
+          
+          /* Responsive Design */
+          @media (max-width: 480px) {
+            #container {
+              max-width: 350px;
+              padding: 24px;
+            }
+            
+            h1 {
+              font-size: 1.875rem;
+            }
+            
+            .link-item {
+              padding: 14px 18px;
+              font-size: 0.95rem;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="container">
+          <div style="width: 100%; position: relative;">
+            ${logoPreview ? `
+              <div class="logo-container">
+                <img src="${logoPreview}" alt="Logo">
+              </div>
+            ` : ''}
+            
+            <h1>${businessName || "Your Business Name"}</h1>
+            <p class="intro-text">${intro || "Your introduction text goes here"}</p>
+            
+            <div class="links-container">
+              ${links.map((link, index) => link.text ? 
+                `<a href="${link.url || '#'}" target="_blank" class="link-item" style="--delay: ${index}">
+                  <i class="${link.icon}" style="margin-right: 8px; opacity: 0.8;"></i>
+                  ${link.text}
+                </a>`
+                : ''
+              ).join('')}
+              ${(links.length === 0 || !links.some(link => link.text)) ? 
+                `<a href="#" class="link-item" style="--delay: 0">
+                  <i class="fas fa-external-link-alt" style="margin-right: 8px; opacity: 0.8;"></i>
+                  Example Link
+                </a>`
+                : ''}
+            </div>
+          </div>
+          
+          <div class="footer">
+            Powered By CSB DEVELOPMENT
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+  };
+
+  // Handle full preview
+  const openFullPreview = () => {
+    setShowFullPreview(true);
+  };
+
+  // Close full preview
+  const closeFullPreview = () => {
+    setShowFullPreview(false);
+  };
+
+  const handleBackToEditor = () => {
+    setSuccessUrl(null);
+    setShowQRSelector(false);
+    setShowQRGenerator(false);
+    setQrOptions(null);
+  };
+
+  const handleBackToQRSelector = () => {
+    setShowQRGenerator(false);
+    setShowQRSelector(true);
+  };
+
+  const handleQROptionsSelected = (options) => {
+    setQrOptions(options);
+    setShowQRSelector(false);
+    setShowQRGenerator(true);
+  };
+
+  const handleCreateNew = () => {
+    setShowQRGenerator(false);
+    setShowQRSelector(false);
+    setShowFullPreview(false);
+    setBusinessName('');
+    setIntro('');
+    setLinks([{ text: '', url: '' }]);
+    setColor('#ffffff');
+    setPTColor('#1f2937');
+    setBTColor('#ffffff');
+    setBColor('#6366f1');
+    setLogo(null);
+    setLogoPreview(null);
+    setPageName('');
+    setSuccessUrl(null);
+  };
+
+  const handleGoHome = () => {
+    setShowQRGenerator(false);
+    setShowQRSelector(false);
+    setShowFullPreview(false);
+  };
+
+  return (
+    <>
+      {showQRGenerator ? (
+        <QRGenerator 
+          url={successUrl} 
+          qrOptions={qrOptions} 
+          onBack={handleBackToQRSelector}
+          onCreateNew={handleCreateNew}
+          onHome={handleGoHome}
+        />
+      ) : showQRSelector ? (
+        <QRTypeSelector 
+          url={successUrl} 
+          onNext={handleQROptionsSelected} 
+          onBack={handleBackToEditor} 
+        />
+      ) : (
+        <div className={`min-h-screen transition-all duration-500 ${darkMode ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-800'}`}>
+          {/* Enhanced Header - Responsive */}
+          <div className={`sticky top-0 z-40 backdrop-blur-lg ${darkMode ? 'bg-gray-900/80' : 'bg-white/80'} border-b border-gray-200/20 shadow-lg`}>
+            <div className="container mx-auto px-4 lg:px-6 py-3 lg:py-4">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className={`w-8 h-8 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl ${darkMode ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-indigo-600'} flex items-center justify-center shadow-lg`}>
+                    <i className="fas fa-rocket text-white text-sm lg:text-xl"></i>
+                  </div>
+                  <div>
+                    <h1 className="text-lg lg:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      CSB Landing Page Hub
+                    </h1>
+                    <p className="text-xs lg:text-sm opacity-70 hidden lg:block">Create stunning landing pages in seconds</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2 lg:space-x-4">
+                  {/* Dark Mode Toggle Switch */}
+                  <label htmlFor="darkModeToggle" className="flex items-center cursor-pointer">
+                    <div className="relative">
+                      <input 
+                        id="darkModeToggle"
+                        type="checkbox"
+                        checked={darkMode}
+                        onChange={toggleDarkMode}
+                        className="sr-only peer"
+                      />
+                      <div className="w-10 h-6 lg:w-14 lg:h-8 bg-gray-300 dark:bg-gray-600 rounded-full transition-colors duration-300 peer-checked:bg-indigo-600"></div>
+                      <div className="dot absolute top-0.5 left-0.5 lg:top-1 lg:left-1 w-5 h-5 lg:w-6 lg:h-6 bg-white rounded-full shadow-md transition-transform duration-300 peer-checked:translate-x-4 lg:peer-checked:translate-x-6 flex items-center justify-center">
+                        {darkMode ? <i className="fas fa-moon text-gray-800 text-xs lg:text-sm"></i> : <i className="fas fa-sun text-yellow-500 text-xs lg:text-sm"></i>}
+                      </div>
+                    </div>
+                  </label>
+
+                  <button 
+                    onClick={openFullPreview}
+                    className="hidden lg:flex px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25 items-center space-x-2 font-medium"
+                  >
+                    <i className="fas fa-expand-alt text-sm"></i>
+                    <span>Full Preview</span>
+                  </button>
+
+                  {/* Pro Features Button */}
+                  <button
+                    onClick={handleProOpen}
+                    className="px-3 lg:px-6 py-2 lg:py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg lg:rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-purple-500/25 flex items-center space-x-1 lg:space-x-2 font-medium text-sm lg:text-base"
+                    title="Pro Features"
+                  >
+                    <i className="fas fa-star text-xs lg:text-sm"></i>
+                    <span>Pro</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
