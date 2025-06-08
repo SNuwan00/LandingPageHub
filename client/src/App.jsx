@@ -1323,4 +1323,473 @@ function App() {
                       </div>
                     </div>
                   </div>
+              {/* Color Customization */}
+                  <div className="mt-4 lg:mt-6 pt-4 lg:pt-6 border-t border-gray-200/20">
+                    <h3 className="text-base lg:text-lg font-semibold mb-3 lg:mb-4">Color Palette</h3>
+                    
+                    {/* Background Color Options */}
+                    <div className="mb-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="text-sm font-medium">Background</label>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-gray-500">Gradient</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={useGradientBackground}
+                              onChange={(e) => setUseGradientBackground(e.target.checked)}
+                              className="sr-only peer"
+                            />
+                            <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      {!useGradientBackground ? (
+                        // Single Color Mode
+                        <div className="flex items-center space-x-2 lg:space-x-3">
+                          <input
+                            type="color"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-2 border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                            className={`flex-1 p-2 lg:p-2 rounded-lg border text-xs lg:text-sm ${
+                              darkMode 
+                                ? 'bg-gray-700 text-white border-gray-600' 
+                                : 'bg-white text-gray-800 border-gray-300'
+                            }`}
+                          />
+                        </div>
+                      ) : (
+                        // Gradient Mode
+                        <div className="space-y-3">
+                          {/* Gradient Presets */}
+                          <div>
+                            <label className="block text-xs font-medium mb-2">Quick Presets</label>
+                            <div className="grid grid-cols-4 gap-2">
+                              {gradientPresets.map((preset, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => {
+                                    setGradientColor1(preset.colors[0]);
+                                    setGradientColor2(preset.colors[1]);
+                                    setGradientDirection(preset.direction);
+                                  }}
+                                  className="h-8 rounded-lg border-2 border-gray-200 hover:border-gray-400 transition-all duration-200"
+                                  style={{
+                                    background: `linear-gradient(${preset.direction.includes('to-r') ? 'to right' : preset.direction.includes('to-br') ? 'to bottom right' : 'to bottom'}, ${preset.colors[0]}, ${preset.colors[1]})`
+                                  }}
+                                  title={preset.name}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Custom Gradient Colors */}
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium mb-1">Color 1</label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="color"
+                                  value={gradientColor1}
+                                  onChange={(e) => setGradientColor1(e.target.value)}
+                                  className="w-8 h-8 rounded border cursor-pointer"
+                                />
+                                <input
+                                  type="text"
+                                  value={gradientColor1}
+                                  onChange={(e) => setGradientColor1(e.target.value)}
+                                  className={`flex-1 p-1 rounded text-xs ${
+                                    darkMode 
+                                      ? 'bg-gray-700 text-white border-gray-600' 
+                                      : 'bg-white text-gray-800 border-gray-300'
+                                  }`}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium mb-1">Color 2</label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="color"
+                                  value={gradientColor2}
+                                  onChange={(e) => setGradientColor2(e.target.value)}
+                                  className="w-8 h-8 rounded border cursor-pointer"
+                                />
+                                <input
+                                  type="text"
+                                  value={gradientColor2}
+                                  onChange={(e) => setGradientColor2(e.target.value)}
+                                  className={`flex-1 p-1 rounded text-xs ${
+                                    darkMode 
+                                      ? 'bg-gray-700 text-white border-gray-600' 
+                                      : 'bg-white text-gray-800 border-gray-300'
+                                  }`}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Gradient Direction */}
+                          <div>
+                            <label className="block text-xs font-medium mb-2">Direction</label>
+                            <div className="grid grid-cols-3 gap-1">
+                              {[
+                                { value: 'to-r', label: '→' },
+                                { value: 'to-br', label: '↘' },
+                                { value: 'to-b', label: '↓' }
+                              ].map(dir => (
+                                <button
+                                  key={dir.value}
+                                  onClick={() => setGradientDirection(dir.value)}
+                                  className={`p-2 rounded text-lg font-bold transition-all duration-300 ${
+                                    gradientDirection === dir.value
+                                      ? 'bg-blue-500 text-white'
+                                      : darkMode
+                                        ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                  }`}
+                                >
+                                  {dir.label}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Gradient Preview */}
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Preview</label>
+                            <div 
+                              className="h-8 rounded-lg border-2 border-gray-200"
+                              style={{
+                                background: `linear-gradient(${gradientDirection.includes('to-r') ? 'to right' : gradientDirection.includes('to-br') ? 'to bottom right' : 'to bottom'}, ${gradientColor1}, ${gradientColor2})`
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Button Color Options */}
+                    <div className="mb-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="text-sm font-medium">Button</label>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-gray-500">Gradient</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={useGradientButton}
+                              onChange={(e) => setUseGradientButton(e.target.checked)}
+                              className="sr-only peer"
+                            />
+                            <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      {!useGradientButton ? (
+                        // Single Color Mode
+                        <div className="flex items-center space-x-2 lg:space-x-3">
+                          <input
+                            type="color"
+                            value={bColor}
+                            onChange={(e) => setBColor(e.target.value)}
+                            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-2 border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={bColor}
+                            onChange={(e) => setBColor(e.target.value)}
+                            className={`flex-1 p-2 lg:p-2 rounded-lg border text-xs lg:text-sm ${
+                              darkMode 
+                                ? 'bg-gray-700 text-white border-gray-600' 
+                                : 'bg-white text-gray-800 border-gray-300'
+                            }`}
+                          />
+                        </div>
+                      ) : (
+                        // Gradient Mode
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium mb-1">Color 1</label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="color"
+                                  value={buttonGradientColor1}
+                                  onChange={(e) => setButtonGradientColor1(e.target.value)}
+                                  className="w-8 h-8 rounded border cursor-pointer"
+                                />
+                                <input
+                                  type="text"
+                                  value={buttonGradientColor1}
+                                  onChange={(e) => setButtonGradientColor1(e.target.value)}
+                                  className={`flex-1 p-1 rounded text-xs ${
+                                    darkMode 
+                                      ? 'bg-gray-700 text-white border-gray-600' 
+                                      : 'bg-white text-gray-800 border-gray-300'
+                                  }`}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium mb-1">Color 2</label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="color"
+                                  value={buttonGradientColor2}
+                                  onChange={(e) => setButtonGradientColor2(e.target.value)}
+                                  className="w-8 h-8 rounded border cursor-pointer"
+                                />
+                                <input
+                                  type="text"
+                                  value={buttonGradientColor2}
+                                  onChange={(e) => setButtonGradientColor2(e.target.value)}
+                                  className={`flex-1 p-1 rounded text-xs ${
+                                    darkMode 
+                                      ? 'bg-gray-700 text-white border-gray-600' 
+                                      : 'bg-white text-gray-800 border-gray-300'
+                                  }`}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Button Gradient Preview */}
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Preview</label>
+                            <div 
+                              className="h-8 rounded-lg border-2 border-gray-200 flex items-center justify-center text-white text-xs font-medium"
+                              style={{
+                                background: `linear-gradient(to right, ${buttonGradientColor1}, ${buttonGradientColor2})`
+                              }}
+                            >
+                              Button Style
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Text Colors */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
+                      <div className="space-y-2 lg:space-y-3">
+                        <label className="block text-xs lg:text-sm font-medium">Text Color</label>
+                        <div className="flex items-center space-x-2 lg:space-x-3">
+                          <input
+                            type="color"
+                            value={ptColor}
+                            onChange={(e) => setPTColor(e.target.value)}
+                            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-2 border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={ptColor}
+                            onChange={(e) => setPTColor(e.target.value)}
+                            className={`flex-1 p-2 lg:p-2 rounded-lg border text-xs lg:text-sm ${
+                              darkMode 
+                                ? 'bg-gray-700 text-white border-gray-600' 
+                                : 'bg-white text-gray-800 border-gray-300'
+                            }`}
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2 lg:space-y-3">
+                        <label className="block text-xs lg:text-sm font-medium">Button Text Color</label>
+                        <div className="flex items-center space-x-2 lg:space-x-3">
+                          <input
+                            type="color"
+                            value={btColor}
+                            onChange={(e) => setBTColor(e.target.value)}
+                            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-2 border-gray-300 cursor-pointer"
+                          />
+                          <input
+                            type="text"
+                            value={btColor}
+                            onChange={(e) => setBTColor(e.target.value)}
+                            className={`flex-1 p-2 lg:p-2 rounded-lg border text-xs lg:text-sm ${
+                              darkMode 
+                                ? 'bg-gray-700 text-white border-gray-600' 
+                                : 'bg-white text-gray-800 border-gray-300'
+                            }`}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Save Section - Enhanced & Responsive */}
+                <div className={`p-4 lg:p-6 rounded-xl lg:rounded-2xl ${darkMode ? 'bg-gray-800/50' : 'bg-white/70'} backdrop-blur-sm shadow-xl border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="flex items-center space-x-2 lg:space-x-3 mb-4 lg:mb-6">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-green-500' : 'bg-green-500'} flex items-center justify-center shadow-md`}>
+                      <i className="fas fa-save text-white text-sm lg:text-lg"></i>
+                    </div>
+                    <h2 className="text-lg lg:text-xl font-bold">Save & Publish</h2>
+                  </div>
                   
+                  <div className="space-y-3 lg:space-y-4">
+                    <div>
+                      <label className="block mb-2 font-medium text-xs lg:text-sm">Page URL Name</label>
+                      <input
+                        type="text"
+                        value={pageName}
+                        onChange={(e) => setPageName(e.target.value)}
+                        placeholder="e.g., my-awesome-page"
+                        className={`w-full p-3 lg:p-4 rounded-lg lg:rounded-xl border transition-all duration-300 focus:ring-2 lg:focus:ring-3 focus:ring-green-500/20 focus:border-green-500 text-sm lg:text-base ${
+                          darkMode 
+                            ? 'bg-gray-700/50 text-white border-gray-600 placeholder-gray-400' 
+                            : 'bg-white/50 text-gray-800 border-gray-300 placeholder-gray-500'
+                        }`}
+                      />
+                      <p className="text-xs opacity-70 mt-2">
+                        Your page will be available at: your-domain.com/{pageName || 'page-name'}
+                      </p>
+                    </div>
+                    
+                    <button 
+                      onClick={handleSave} 
+                      disabled={!pageName}
+                      className="w-full p-3 lg:p-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg lg:rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-green-500/25 font-bold text-base lg:text-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2 lg:space-x-3"
+                    >
+                      <i className="fas fa-rocket text-sm lg:text-base"></i>
+                      <span>Create Landing Page</span>
+                    </button>
+                  </div>
+                </div>
+                {/* Mobile Preview Button */}
+                <div className="lg:hidden fixed bottom-4 left-4 right-4 z-30 mobile-preview-btn safe-area-bottom">
+                  <button 
+                    onClick={openFullPreview}
+                    className="w-full p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25 flex items-center justify-center space-x-3 font-bold text-lg backdrop-blur-sm border border-white/10 touch-optimized focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:scale-95"
+                    aria-label="Preview your landing page in full screen"
+                  >
+                    <i className="fas fa-eye text-lg" aria-hidden="true"></i>
+                    <span>Preview Landing Page</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Enhanced Preview (Desktop Only) */}
+            <div className="hidden lg:flex lg:w-1/2 lg:h-full flex-col border-l border-gray-200/20 desktop-right-panel desktop-preview-panel">
+              <div className={`p-4 lg:p-6 ${darkMode ? 'bg-gray-800/70' : 'bg-white/70'} backdrop-blur-sm border-b border-gray-200/20`}>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-2 lg:space-x-3">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl ${darkMode ? 'bg-blue-500' : 'bg-blue-500'} flex items-center justify-center shadow-md`}>
+                      <i className="fas fa-eye text-white text-sm lg:text-lg"></i>
+                    </div>
+                    <h2 className="text-lg lg:text-xl font-bold">Live Preview</h2>
+                  </div>
+                  
+                  <div className="flex items-center space-x-1 lg:space-x-2 text-xs lg:text-sm opacity-70">
+                    <i className="fas fa-mobile-alt"></i>
+                    <span>Mobile View</span>
+                  </div>
+                </div>
+                
+                <div className="mt-3 lg:mt-4 flex items-center justify-center">
+                  <div className={`px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg text-xs lg:text-sm font-medium ${
+                    darkMode ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-600'
+                  }`}>
+                    Template: <span className="font-bold text-blue-500">{template.name}</span> {template.icon}
+                  </div>
+                </div>
+              </div>
+              
+              <div 
+                className="flex-1 overflow-y-auto flex justify-center items-center p-4 lg:p-6"
+                style={
+                  template.name === "Dark Pro" 
+                    ? {background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #374151 100%)"} 
+                    : template.name === "Cyberpunk"
+                    ? {background: "#000000", backgroundImage: "radial-gradient(circle at 25% 25%, #00ffff 0%, transparent 50%), radial-gradient(circle at 75% 75%, #ff00ff 0%, transparent 50%)"}
+                    : template.name === "Nature Zen"
+                    ? {background: "linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)"}
+                    : template.name === "Golden Hour"
+                    ? {background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fed7aa 100%)"}
+                    : template.name === "Deep Ocean"
+                    ? {background: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)"}
+                    : template.name === "Aurora"
+                    ? {background: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%)"}
+                    : template.name === "Mint Fresh"
+                    ? {background: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #a7f3d0 100%)"}
+                    : template.name === "Glassmorphism"
+                    ? {background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"}
+                    : darkMode 
+                      ? {background: "linear-gradient(135deg, #1f2937 0%, #374151 100%)"} 
+                      : {background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)"}
+                }
+              >
+                <div className="relative">
+                  <div className={`absolute -inset-3 lg:-inset-4 rounded-2xl lg:rounded-3xl ${darkMode ? 'bg-white/10' : 'bg-black/5'} backdrop-blur-sm`}></div>
+                  <iframe 
+                    srcDoc={generateHtmlContent()}
+                    title="Landing Page Preview"
+                    className="relative w-[300px] lg:w-[350px] h-[500px] lg:h-[600px] border-0 rounded-xl lg:rounded-2xl shadow-2xl"
+                    style={{ 
+                      boxShadow: template.name === "Cyberpunk" 
+                        ? "0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2)" 
+                        : template.name === "Glassmorphism"
+                        ? "0 8px 32px 0 rgba(31, 38, 135, 0.37)"
+                        : "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                    }}
+                  />
+                </div>
+              </div>
+              
+              {/* Footer Info */}
+              <div className={`p-3 lg:p-4 ${darkMode ? 'bg-gray-800/70' : 'bg-white/70'} backdrop-blur-sm border-t border-gray-200/20`}>
+                <div className="text-center">
+                  <div className="text-xs lg:text-sm font-medium text-blue-600 mb-1">
+                    © 2024 All Rights Reserved - CSB Developments
+                  </div>
+                  <div className="text-xs opacity-70">
+                    <a href="https://www.csbodima.lk" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+                      www.csbodima.lk
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pro Modal - New Addition */}
+          {showProModal && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold">Pro Features</h2>
+                  <button onClick={handleProClose} className="text-gray-600 dark:text-gray-300 hover:text-gray-800">
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Unlock additional premium templates, advanced analytics, and priority support.</p>
+                  <button
+                    onClick={() => {/* Payment gateway integration to be configured */}}
+                    className="w-full px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg hover:from-green-600 hover:to-teal-600 transition-all duration-300"
+                  >
+                    Upgrade to Pro
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
+}
+
+export default App;
+
+    
